@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- This file contains job definitions in schema version 2.0 format -->
+<job-scheduling-data xmlns="http://quartznet.sourceforge.net/JobSchedulingData" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0">
+
+  <processing-directives>
+    <overwrite-existing-data>true</overwrite-existing-data>
+  </processing-directives>
+
+  <schedule>
+
+    <job>
+      <name>sampleJob</name>
+      <group>sampleGroup</group>
+      <description>Sample job for Quartz Server</description>
+      <job-type>MVCJob.Models.Jobs.CallApiJob, MVCJob</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <!-- entry可以设定多个-->
+        <entry>
+          <key>Url</key>
+          <value>http://localhost:8083/Home</value>
+        </entry>
+        <entry>
+          <key>Data</key>
+          <value>{"xxx","xxx"}</value>
+        </entry>
+        <entry>
+          <key>Header</key>
+          <value>{"xxx","xxx"}</value>
+        </entry>
+      </job-data-map>
+    </job>
+    <trigger>
+      <simple>
+        <name>sampleTrigger</name>
+        <group>sampleGroup</group>
+        <description>Simple trigger to simply fire sample job</description>
+        <job-name>sampleJob</job-name>
+        <job-group>sampleGroup</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+      </simple>
+    </trigger>
+    
+    <job>
+      <name>SimpleJob1</name>
+      <group>myJobGroup1</group>
+      <description>SimpleJob1</description>
+      <job-type>MVCJob.Models.Jobs.CallApiJob, MVCJob</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Url</key>
+          <value>http://localhost:8083/Home</value>
+        </entry>
+        <entry>
+          <key>Data</key>
+          <value>{"xxx","xxx"}</value>
+        </entry>
+        <entry>
+          <key>Header</key>
+          <value>{"xxx","xxx"}</value>
+        </entry>
+      </job-data-map>
+    </job>
+    <trigger>
+      <cron>
+        <name>trigger1</name>
+        <group>myTriggerGroup</group>
+        <job-name>SimpleJob1</job-name>
+        <job-group>myJobGroup1</job-group>
+        <cron-expression>0/2 * * * * ?</cron-expression>
+      </cron>
+    </trigger>
+    
+  </schedule>
+</job-scheduling-data>
